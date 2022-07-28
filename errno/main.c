@@ -24,6 +24,7 @@ int main() {
         const char* example = examples[i];
         int parsed = parse_natural_base_10_number(example);
         if (parse_number_error) {
+            parse_number_error = false;
             printf("error: %s\n", example);
         }
         else {
