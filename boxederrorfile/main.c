@@ -121,7 +121,7 @@ struct ParseNaturalNumberResult parse_natural_base_10_number(const char* s) {
     }
 
     struct ParseNaturalNumberResult result = {
-            .success = false,
+            .success = true,
             .data = {
                     .success = parsed
             }
