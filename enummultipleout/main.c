@@ -34,14 +34,17 @@ enum ParseNaturalNumberResult parse_natural_base_10_number(
         }
         else {
             int digit = s[i] - '0';
-            int new_parsed = (parsed * 10) + digit;
-            if ((new_parsed - digit) / 10 != parsed) {
+            int new_parsed;
+            if (__builtin_smul_overflow(parsed, 10, &new_parsed)) {
                 too_big_info->remaining_characters = strlen(s) - i;
                 return PARSE_NUMBER_TOO_BIG;
             }
-            else {
-                parsed = new_parsed;
+            if (__builtin_sadd_overflow(new_parsed, digit, &new_parsed)) {
+                too_big_info->remaining_characters = strlen(s) - i;
+                return PARSE_NUMBER_TOO_BIG;
             }
+
+            parsed = new_parsed;
         }
     }
 
